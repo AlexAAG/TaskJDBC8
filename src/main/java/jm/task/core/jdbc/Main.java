@@ -1,6 +1,8 @@
 package jm.task.core.jdbc;
 
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
+import jm.task.core.jdbc.util.Util;
+import org.hibernate.SessionFactory;
 
 public class Main {
     public static void main(String[] args) {
@@ -28,5 +30,10 @@ public class Main {
 
         //+++Удаление таблицы
         userDaoJDBC.dropUsersTable();
+
+
+
+        //соединение гипер УДАЛИТЬ
+        Util.getSessionFactory();
     }
 }
