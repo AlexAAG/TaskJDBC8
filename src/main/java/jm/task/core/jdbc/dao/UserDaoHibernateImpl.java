@@ -121,6 +121,7 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public List<User> getAllUsers() {
         List<User> userList = new ArrayList<>();
+        List<User> userList2 = new ArrayList<>();
 
         Transaction transaction = null;
         try (Session session = Util.getSessionFactory().openSession()) {
@@ -130,6 +131,10 @@ public class UserDaoHibernateImpl implements UserDao {
 
             Query query = session.createQuery("FROM User");
             userList = query.list();
+
+            for (User users : userList) {
+                userList2.add(users);
+            }
 
             // commit transction
             transaction.commit();
