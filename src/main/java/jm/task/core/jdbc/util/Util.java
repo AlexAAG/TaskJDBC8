@@ -29,32 +29,39 @@ public class Util {
          }
 
 
+         //hibernate
             private static SessionFactory sessionFactory;
 
             public static SessionFactory getSessionFactory() {
-                Configuration configuration = new Configuration();
+                if (sessionFactory == null) {
+                    try {
+                        Configuration configuration = new Configuration();
 
-                Properties settings = new Properties();
-                settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-                settings.put(Environment.URL, "jdbc:mysql://localhost:3306/ultra_low?useSSL=false");
-                settings.put(Environment.USER, "rootalex");
-                settings.put(Environment.PASS, "rootalex");
-                //settings.put(Environment.DIALECT, "org.hibernate.dialect.Dialect");
+                        Properties settings = new Properties();
+                        settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
+                        settings.put(Environment.URL, "jdbc:mysql://localhost:3306/ultra_low?useSSL=false");
+                        settings.put(Environment.USER, "rootalex");
+                        settings.put(Environment.PASS, "rootalex");
+                        settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
 
-                settings.put(Environment.SHOW_SQL, "true");
-//                settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-//                settings.put(Environment.HBM2DDL_AUTO, "create-drop");
+                        settings.put(Environment.SHOW_SQL, "true");
+                        settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+                        settings.put(Environment.HBM2DDL_AUTO, "create-drop");
 
-                configuration.setProperties(settings);
+                        configuration.setProperties(settings);
 
-                //configuration.addAnnotatedClass(User.class);
+                        configuration.addAnnotatedClass(User.class);
 
-                ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                        .applySettings(configuration.getProperties()).build();
+                        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                                .applySettings(configuration.getProperties()).build();
 
-                sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+                        sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 
-                System.out.println("okok");
+                        System.out.println("Hibernate: OK");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
                 return sessionFactory;
             }
 }
