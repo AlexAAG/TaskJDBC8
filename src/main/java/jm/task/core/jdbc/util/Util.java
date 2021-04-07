@@ -14,7 +14,7 @@ import java.util.Properties;
 
 public class Util {
     // реализуйте настройку соеденения с БД
-            private static String url = "jdbc:mysql://localhost:3306/ultra_low?useSSL=false";
+            private static String url = "jdbc:mysql://localhost:3306/ultra_low7?useSSL=false";
             private static String username = "rootalex";
             private static String password = "rootalex";
 
@@ -39,7 +39,7 @@ public class Util {
 
                         Properties settings = new Properties();
                         settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-                        settings.put(Environment.URL, "jdbc:mysql://localhost:3306/ultra_low?useSSL=false");
+                        settings.put(Environment.URL, "jdbc:mysql://localhost:3306/ultra_low7?useSSL=false");
                         settings.put(Environment.USER, "rootalex");
                         settings.put(Environment.PASS, "rootalex");
                         settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");

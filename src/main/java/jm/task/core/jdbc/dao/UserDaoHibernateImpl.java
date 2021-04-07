@@ -10,16 +10,16 @@ import org.hibernate.query.Query;
 
 public class UserDaoHibernateImpl implements UserDao {
 
-    public UserDaoHibernateImpl() {
+    Session session = Util.getSessionFactory().openSession();
 
+    public UserDaoHibernateImpl() {
 
     }
 
     @Override
     public void createUsersTable() {
         Transaction transaction = null;
-        try (Session session = Util.getSessionFactory().openSession()) {
-
+        try {
             transaction = session.beginTransaction();
             session.createSQLQuery("CREATE TABLE IF NOT EXISTS user(\n" +
                     "   id INT AUTO_INCREMENT,\n" +
@@ -29,9 +29,7 @@ public class UserDaoHibernateImpl implements UserDao {
                     "   age INT\n" +
                     ")")
                     .executeUpdate();
-
             transaction.commit();
-
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -42,14 +40,11 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public void dropUsersTable() {
         Transaction transaction = null;
-        try (Session session = Util.getSessionFactory().openSession()) {
-
+        try {
             transaction = session.beginTransaction();
             session.createSQLQuery("DROP TABLE IF EXISTS user;")
                     .executeUpdate();   //обновляет инфу
-
             transaction.commit();
-
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -60,14 +55,10 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public void saveUser(String name, String lastName, byte age) {
         Transaction transaction = null;
-        try (Session session = Util.getSessionFactory().openSession()) {
-
+        try {
             transaction = session.beginTransaction();
-
             session.save(new User(name, lastName, age));
-
             transaction.commit();
-
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -78,15 +69,11 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public void removeUserById(long id) {
         Transaction transaction = null;
-        try (Session session = Util.getSessionFactory().openSession()) {
-
+        try {
             transaction = session.beginTransaction();
-
             User user1 = session.find(User.class, id);
             session.delete(user1);
-
             transaction.commit();
-
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -96,42 +83,24 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        List<User> userList = new ArrayList<>();
+        List<User> userList;
         List<User> userList2 = new ArrayList<>();
 
-        Transaction transaction = null;
-        try (Session session = Util.getSessionFactory().openSession()) {
-
-            transaction = session.beginTransaction();
-
-            Query query = session.createQuery("FROM User");
-            userList = query.list();
-
-            for (User users : userList) {
-                userList2.add(users);
-            }
-
-            transaction.commit();
-
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
+        Query query = session.createQuery("FROM User");
+        userList = query.list();
+        for (User users : userList) {
+            userList2.add(users);
         }
-
         return userList;
     }
 
     @Override
     public void cleanUsersTable() {
         Transaction transaction = null;
-        try (Session session = Util.getSessionFactory().openSession()) {
-
+        try {
             transaction = session.beginTransaction();
-
             session.createQuery("DELETE FROM User")
                     .executeUpdate();
-
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
