@@ -19,7 +19,7 @@ public class Main {
         userService.saveUser("alex4", "ivanov", (byte)33);
 
         //Получение всех User из базы и вывод в консоль
-        System.out.println(userService.getAllUsers());
+        System.out.println("allUsers"+userService.getAllUsers());
 
         //Удаление User из таблицы ( по id )
         userService.removeUserById(1);

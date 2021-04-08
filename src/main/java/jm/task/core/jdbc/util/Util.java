@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+
 public class Util {
     // реализуйте настройку соеденения с БД
             private static String url = "jdbc:mysql://localhost:3306/ultra_low7?useSSL=false";
@@ -30,6 +31,7 @@ public class Util {
 
 
          //hibernate
+
             private static SessionFactory sessionFactory;
 
             public static SessionFactory getSessionFactory() {
